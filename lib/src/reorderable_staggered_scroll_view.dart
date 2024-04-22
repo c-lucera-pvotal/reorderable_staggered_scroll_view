@@ -46,6 +46,7 @@ abstract class ReorderableStaggeredScrollViewGridItem
   });
 
   num get mainAxisSize;
+
   int get crossAxisSize;
 
   @override
@@ -230,11 +231,14 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
   /// The axis direction of the grid, if applicable.
   final AxisDirection? axisDirection;
 
+  final ValueChanged<List<ReorderableStaggeredScrollViewListItem>>? onReorder;
+
   /// Constructor for creating a ReorderableStaggeredScrollView in a list layout.
   const ReorderableStaggeredScrollView.list({
     super.key,
     this.enable = true,
     required this.children,
+    this.onReorder,
     this.isLongPressDraggable = true,
     this.scrollDirection = Axis.vertical,
     this.controller,
@@ -273,6 +277,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     super.key,
     this.enable = true,
     required List<ReorderableStaggeredScrollViewGridItem> this.children,
+    this.onReorder,
     this.isLongPressDraggable = true,
     required this.crossAxisCount,
     this.axisDirection,
@@ -426,6 +431,7 @@ class _ReorderableStaggeredScrollViewState
     required Widget Function(List<Widget>) buildItems,
   }) {
     return DragContainer(
+      onReorder: widget.onReorder,
       isDrag: widget.enable,
       scrollDirection: widget.scrollDirection,
       isLongPressDraggable: widget.isLongPressDraggable,

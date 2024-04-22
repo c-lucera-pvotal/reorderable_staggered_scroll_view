@@ -82,10 +82,13 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
   final bool isDrag;
   final List<T>? isNotDragList;
 
+  final ValueChanged<List<T>>? onReorder;
+
   const DragContainer({
     required this.buildItems,
     required this.dataList,
     required this.items,
+    this.onReorder,
     this.isLongPressDraggable = true,
     this.buildFeedback,
     this.axis,
@@ -341,6 +344,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
               setDragStart(isDragStart: false);
               endAnimation();
               widget.onDragCompleted?.call(data);
+              widget.onReorder?.call(widget.dataList);
             },
             child: child,
           );
